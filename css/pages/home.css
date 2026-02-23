@@ -498,15 +498,15 @@
     font-size: clamp(2.2rem, 9vw, 3.2rem);
   }
 
-  /* Sarah's quote — larger on mobile */
+  /* Sarah's quote — larger and more breathing room on mobile */
   .philosophy-quote {
-    font-size: 1.4rem;
-    line-height: 1.6;
+    font-size: 1.6rem;
+    line-height: 1.5;
   }
 
   .philosophy-bridge {
-    padding-top: 48px;
-    padding-bottom: 48px;
+    padding-top: 64px;
+    padding-bottom: 64px;
   }
 
   /* Featured: single column on mobile */
