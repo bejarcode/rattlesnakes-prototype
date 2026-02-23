@@ -495,7 +495,7 @@
   }
 
   .hero-headline {
-    font-size: clamp(2.2rem, 9vw, 3.2rem);
+    font-size: clamp(2.8rem, 12vw, 4rem);
   }
 
   /* Sarah's quote — larger and more breathing room on mobile */
@@ -505,7 +505,7 @@
   }
 
   .philosophy-bridge {
-    padding-top: 64px;
+    padding-top: 80px;
     padding-bottom: 64px;
   }
 
