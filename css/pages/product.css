@@ -178,6 +178,14 @@
   padding-left: max(var(--space-lg), calc((100% - var(--max-width)) / 2 + var(--space-lg)));
   padding-right: max(var(--space-lg), calc((100% - var(--max-width)) / 2 + var(--space-lg)));
 }
+.detail-content-section h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2rem;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 32px;
+}
 .detail-content-section h4 {
   font-family: var(--font-display);
   font-weight: 600;
@@ -194,40 +202,208 @@
   line-height: var(--leading-body);
   margin-bottom: 16px;
   max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* --- Plant list grid --- */
-.plant-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-.plant-item {
-  padding: 20px;
-  background: rgba(15, 15, 15, 0.5);
-  border-radius: 8px;
-  border: 1px solid rgba(245, 240, 232, 0.04);
-}
-.plant-item-name {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--color-text);
-  margin-bottom: 4px;
-}
-.plant-item-latin {
+/* --- Plant Medicine section intro --- */
+.plant-intro {
   font-family: var(--font-body);
   font-style: italic;
   font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* --- Plant list — vertical editorial layout --- */
+.plant-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 48px;
+  counter-reset: plant-counter;
+}
+.plant-item {
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(196, 153, 59, 0.12);
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0 20px;
+  counter-increment: plant-counter;
+}
+.plant-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.plant-item:first-child {
+  padding-top: 0;
+}
+
+/* Ordinal number — gold accent */
+.plant-item::before {
+  content: counter(plant-counter, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
   color: var(--color-accent);
-  margin-bottom: 8px;
+  opacity: 0.4;
+  grid-row: 1 / -1;
+  line-height: 1;
+  padding-top: 6px;
+}
+
+.plant-item-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+  grid-column: 2;
+}
+.plant-item-latin {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+  grid-column: 2;
 }
 .plant-item-desc {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: var(--size-body);
   color: var(--color-text-muted);
-  line-height: 1.6;
+  line-height: var(--leading-body);
+  grid-column: 2;
+}
+
+/* --- One-line hook (emotional entry point above card name) --- */
+.detail-hook {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* --- Key themes (horizontal tag list) --- */
+.detail-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.detail-theme-tag {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border: 1px solid rgba(245, 240, 232, 0.1);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+}
+
+/* --- Core message highlight (in meaning section) --- */
+.detail-core-message {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--color-text);
+  line-height: 1.7;
+  padding: 20px 24px;
+  border-left: 2px solid var(--color-accent);
+  margin: 24px auto;
+  max-width: 720px;
+}
+
+/* --- Email signup on card pages --- */
+.detail-signup {
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  border-top: 1px solid rgba(245, 240, 232, 0.06);
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+.detail-signup h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+.detail-signup p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.detail-signup .signup-form {
+  display: flex;
+  gap: 8px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.detail-signup .signup-form input {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  padding: 12px 16px;
+  background: rgba(245, 240, 232, 0.05);
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  border-radius: 6px;
+  color: var(--color-text);
+}
+.detail-signup .signup-form input::placeholder {
+  color: var(--color-text-muted);
+}
+.detail-signup .signup-form button {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.detail-signup .signup-form button:hover {
+  background: var(--color-accent-hover);
+}
+
+/* --- Trust badge --- */
+.detail-trust {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgba(168, 155, 140, 0.5);
+  text-align: center;
+  padding: 16px var(--space-lg);
+  border-top: 1px solid rgba(245, 240, 232, 0.04);
+}
+
+/* --- Related cards intro --- */
+.related-intro {
+  text-align: center;
 }
 
 /* --- Related cards row --- */
@@ -236,6 +412,9 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-top: 24px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ================================================================
@@ -243,9 +422,6 @@
    ================================================================ */
 @media (max-width: 1024px) {
   .detail-top {
-    grid-template-columns: 1fr;
-  }
-  .plant-list {
     grid-template-columns: 1fr;
   }
   .related-cards {
@@ -269,11 +445,19 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .plant-list {
-    grid-template-columns: 1fr;
+  .plant-item {
+    grid-template-columns: 28px 1fr;
+    gap: 0 12px;
   }
   .size-option {
     padding: 12px 24px;
     min-height: 44px;
+  }
+  .detail-signup .signup-form {
+    flex-direction: column;
+  }
+  .detail-signup .signup-form input,
+  .detail-signup .signup-form button {
+    width: 100%;
   }
 }
