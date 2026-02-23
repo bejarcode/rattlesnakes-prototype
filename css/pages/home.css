@@ -468,18 +468,26 @@
 }
 
 @media (max-width: 640px) {
-  /* Hero cards shrink on mobile */
+  /* Hero cards — bigger and centered on mobile */
   .hero-cards {
-    height: 320px;
+    height: 380px;
   }
 
   .hero-card {
-    width: 130px;
+    width: 180px;
+  }
+
+  .hero-card:nth-child(1) {
+    margin-left: -220px;
   }
 
   .hero-card:nth-child(2) {
-    width: 150px;
-    margin-left: -75px;
+    width: 200px;
+    margin-left: -100px;
+  }
+
+  .hero-card:nth-child(3) {
+    margin-left: 40px;
   }
 
   .hero-text {
@@ -490,11 +498,28 @@
     font-size: clamp(2.2rem, 9vw, 3.2rem);
   }
 
+  /* Sarah's quote — larger on mobile */
+  .philosophy-quote {
+    font-size: 1.3rem;
+    line-height: 1.6;
+  }
+
   /* Featured: single column on mobile */
   .featured-grid {
     grid-template-columns: 1fr;
     max-width: 360px;
     margin: 0 auto;
+  }
+
+  /* Murals images — more breathing room on mobile */
+  .murals-preview-images {
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .murals-preview {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   /* Hero CTAs stack on mobile */
