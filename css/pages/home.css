@@ -500,8 +500,13 @@
 
   /* Sarah's quote — larger on mobile */
   .philosophy-quote {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     line-height: 1.6;
+  }
+
+  .philosophy-bridge {
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
   /* Featured: single column on mobile */
@@ -511,15 +516,19 @@
     margin: 0 auto;
   }
 
-  /* Murals images — more breathing room on mobile */
-  .murals-preview-images {
-    gap: 8px;
-    margin-top: 8px;
-  }
-
+  /* Murals images — 2 columns instead of 3, bigger images */
   .murals-preview {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .murals-preview-images {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .murals-preview-images img:first-child {
+    grid-row: auto;
   }
 
   /* Hero CTAs stack on mobile */
