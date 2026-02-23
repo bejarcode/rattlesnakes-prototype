@@ -1,0 +1,97 @@
+/* ================================================
+   LAYOUT — Container & Section Patterns
+   Rattlesnakes & Rainbows Prototype
+   ================================================ */
+
+/* Main container (offset for nav on desktop - but for pages, no side nav needed) */
+.site-main {
+  min-height: 100vh;
+}
+
+/* Section foundations */
+.section {
+  padding: var(--space-xxl) var(--space-lg);
+  position: relative;
+}
+.section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.section-inner.full-width {
+  max-width: none;
+  padding: 0;
+}
+
+/* Section background variants */
+.section--dark { background: var(--color-bg-primary); }
+.section--warm { background: var(--color-bg-warm); }
+.section--light {
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+}
+
+/* Section headers */
+.section-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(196,153,59,0.2), transparent);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--size-h1);
+  color: var(--color-text);
+  margin-bottom: 16px;
+  line-height: var(--leading-heading);
+}
+.section-desc {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+  max-width: 640px;
+  margin-bottom: var(--space-lg);
+}
+
+/* Scroll-reveal entrance */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion: skip animations */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ================================================
+   Responsive
+   ================================================ */
+@media (max-width: 1024px) {
+  .section { padding: var(--space-xl) var(--space-md); }
+}
+@media (max-width: 640px) {
+  .section { padding: var(--space-lg) var(--space-sm); }
+}

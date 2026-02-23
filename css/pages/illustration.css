@@ -1,0 +1,148 @@
+/* ================================================================
+   ILLUSTRATION PAGE
+   Rattlesnakes & Rainbows — Dark Temple Design System
+   ================================================================ */
+
+/* --- Page wrapper --- */
+.illustration-page {
+  padding-top: var(--nav-height);
+}
+
+/* --- Hero section --- */
+.illustration-hero {
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  background: var(--color-bg-primary);
+}
+.illustration-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--size-h1);
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+.illustration-hero p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: var(--leading-body);
+}
+
+/* ================================================================
+   GALLERY GRID
+   3 columns, dark bg, generous spacing
+   ================================================================ */
+.illustration-gallery {
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--color-bg-warm);
+}
+.illustration-gallery-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* --- Individual item --- */
+.illustration-item {
+  background: var(--color-bg-primary);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.illustration-item:hover {
+  transform: translateY(-4px);
+}
+.illustration-item-image {
+  overflow: hidden;
+}
+.illustration-item-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.illustration-item:hover .illustration-item-image img {
+  transform: scale(1.03);
+}
+.illustration-item-info {
+  padding: 16px 20px 20px;
+}
+.illustration-item-info h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.illustration-type {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ================================================================
+   BOTTOM CTA
+   ================================================================ */
+.illustration-cta {
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--color-bg-primary);
+  text-align: center;
+}
+.illustration-cta h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--size-h2);
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+.illustration-cta p {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+  max-width: 640px;
+  margin: 0 auto var(--space-md);
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 1024px) {
+  .illustration-gallery-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .illustration-hero {
+    padding: var(--space-lg) var(--space-md);
+  }
+  .illustration-gallery {
+    padding: var(--space-lg) var(--space-md);
+  }
+  .illustration-cta {
+    padding: var(--space-lg) var(--space-md);
+  }
+}
+
+@media (max-width: 640px) {
+  .illustration-gallery-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .illustration-hero {
+    padding: var(--space-lg) var(--space-sm);
+  }
+  .illustration-gallery {
+    padding: var(--space-lg) var(--space-sm);
+  }
+  .illustration-cta {
+    padding: var(--space-lg) var(--space-sm);
+  }
+}

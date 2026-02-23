@@ -1,0 +1,223 @@
+/* ================================================================
+   ABOUT PAGE
+   Rattlesnakes & Rainbows — Dark Temple Design System
+   ================================================================ */
+
+/* --- Page wrapper --- */
+.about-page {
+  padding-top: var(--nav-height);
+}
+
+/* --- Hero: photo + bio side-by-side --- */
+.about-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Photo column --- */
+.about-photo {
+  background: var(--color-bg-warm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  position: relative;
+}
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.about-photo-placeholder {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(168, 155, 140, 0.4);
+  text-align: center;
+  padding: 40px;
+}
+.about-photo-placeholder::before {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 80px;
+  border: 2px solid rgba(168, 155, 140, 0.15);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+}
+
+/* --- Content column --- */
+.about-content {
+  padding: 64px 48px;
+  background: var(--color-bg-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Name --- */
+.about-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+/* --- Quote --- */
+.about-quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-accent);
+  line-height: 1.6;
+  margin-bottom: 28px;
+  padding-left: 20px;
+  border-left: 2px solid rgba(196, 153, 59, 0.3);
+}
+
+/* --- Bio paragraphs --- */
+.about-bio {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+  margin-bottom: 16px;
+}
+
+/* --- Recognition list --- */
+.about-recognition {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(245, 240, 232, 0.06);
+}
+.about-recognition-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+.about-recognition-list {
+  list-style: none;
+}
+.about-recognition-list li {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.about-recognition-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.5;
+}
+
+/* ================================================================
+   THE CHANNEL SECTION
+   ================================================================ */
+.about-channel {
+  padding: var(--space-xl) var(--space-lg);
+  background: var(--color-bg-warm);
+}
+.about-channel-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.about-channel-image {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.about-channel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.about-channel-text h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--size-h2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 24px;
+}
+.about-channel-text blockquote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--color-accent);
+  line-height: 1.6;
+  padding-left: 20px;
+  border-left: 2px solid rgba(196, 153, 59, 0.3);
+  margin-bottom: 24px;
+}
+.about-channel-text p {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+}
+
+/* ================================================================
+   ABOUT CTAs SECTION
+   ================================================================ */
+.about-ctas {
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  background: var(--color-bg-primary);
+}
+.about-ctas .btn-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 1024px) {
+  .about-hero-inner {
+    grid-template-columns: 1fr;
+  }
+  .about-photo {
+    min-height: 300px;
+  }
+  .about-channel-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-content {
+    padding: 32px 24px;
+  }
+  .about-channel {
+    padding: var(--space-lg) var(--space-sm);
+  }
+  .about-channel-inner {
+    gap: 32px;
+  }
+  .about-ctas {
+    padding: var(--space-lg) var(--space-sm);
+  }
+}

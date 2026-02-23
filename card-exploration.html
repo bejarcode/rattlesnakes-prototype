@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Display Exploration — Dark Temple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ================================================
+   RESET & BASE — DARK TEMPLE
+   ================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body {
+  font-family: 'Raleway', sans-serif;
+  background: #0F0F0F;
+  color: #F5F0E8;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+
+/* ================================================
+   DARK TEMPLE CUSTOM PROPERTIES
+   ================================================ */
+:root {
+  --color-bg-primary: #0F0F0F;
+  --color-bg-warm: #2A2118;
+  --color-bg-light: #F5F0E8;
+  --color-accent: #C4993B;
+  --color-green: #4A6741;
+  --color-warm: #C75B3A;
+  --color-text: #F5F0E8;
+  --color-text-muted: #A89B8C;
+  --color-text-dark: #2C2416;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-ui: 'Raleway', Arial, sans-serif;
+}
+
+/* ================================================
+   STICKY NAV
+   ================================================ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  height: 64px;
+  background: rgba(15,15,15,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(196,153,59,0.1);
+}
+.nav a {
+  color: rgba(245,240,232,0.4);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 22px 20px;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.nav a:hover, .nav a.active { color: var(--color-accent); }
+.nav .sep { width: 1px; height: 20px; background: rgba(245,240,232,0.08); }
+
+/* ================================================
+   INTRO
+   ================================================ */
+.intro {
+  padding: 140px 40px 80px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.intro h1 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--color-text);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+.intro h1 em { font-style: italic; color: var(--color-accent); }
+.intro p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.intro .note {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: rgba(168,155,140,0.5);
+  margin-top: 32px;
+}
+
+/* ================================================
+   OPTION SECTIONS
+   ================================================ */
+.option-section {
+  padding: 80px 0 100px;
+  border-top: 1px solid rgba(196,153,59,0.08);
+}
+.option-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.option-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+  align-items: start;
+}
+.option-label {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+.option-header h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2.2rem;
+  color: var(--color-text);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.option-header .desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+.option-header .traits {
+  list-style: none;
+  padding: 0;
+}
+.option-header .traits li {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(245,240,232,0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.option-header .traits li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* Card Grids */
+.card-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* ================================================
+   OPTION 1 — THE SACRED FRAME
+   Concept: Gold inset border creates a frame-within-a-frame.
+   The painting sits inside a thin gold rule, like a gilded
+   frame in a dark gallery. Info area is a warm panel below.
+   ================================================ */
+.card-v1 {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1612;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.card-v1:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(196,153,59,0.12), 0 0 0 1px rgba(196,153,59,0.2);
+}
+.card-v1-image-wrap {
+  padding: 16px 16px 0;
+}
+.card-v1-image {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid rgba(196,153,59,0.25);
+  position: relative;
+}
+.card-v1-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-v1:hover .card-v1-image img { transform: scale(1.03); }
+.card-v1-info {
+  padding: 20px 20px 24px;
+  background: linear-gradient(180deg, #1a1612 0%, #1f1a14 100%);
+}
+.card-v1-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.card-v1-plant {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+.card-v1-price {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--color-accent);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+
+/* ================================================
+   OPTION 2 — THE TAROT CARD
+   Concept: The entire component IS a tarot card. Rounded corners
+   like a real card. Thin cream border. Wider proportions.
+   The image area has a dark mat, info sits on a lighter
+   parchment-toned panel — like the name printed on a real card.
+   ================================================ */
+.card-v2 {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1c1916;
+  border: 1px solid rgba(245,240,232,0.12);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+  cursor: pointer;
+  position: relative;
+}
+.card-v2:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,153,59,0.25);
+  border-color: rgba(196,153,59,0.3);
+}
+.card-v2-inner {
+  margin: 12px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0F0F0F;
+}
+.card-v2-image {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+}
+.card-v2-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-v2:hover .card-v2-image img { transform: scale(1.03); }
+.card-v2-info {
+  padding: 18px 20px 22px;
+  background: #28221a;
+  text-align: center;
+  border-top: 1px solid rgba(245,240,232,0.06);
+}
+.card-v2-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.card-v2-plant {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+.card-v2-price {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+
+/* ================================================
+   OPTION 3 — THE GILDED EDGE
+   Concept: A gold border creates a gilded edge effect, like
+   a card dipped in gold leaf. The sheen is a subtle diagonal
+   gold gradient that sweeps across on hover. The info area
+   is minimal, below the card with breathing room.
+   ================================================ */
+.card-v3 {
+  border-radius: 14px;
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-v3:hover { transform: translateY(-6px); }
+.card-v3-frame {
+  border-radius: 14px;
+  padding: 3px;
+  background: linear-gradient(145deg, #C4993B 0%, #8B6914 30%, #C4993B 50%, #E8C66A 70%, #C4993B 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(196,153,59,0.08);
+  transition: box-shadow 0.5s;
+}
+.card-v3:hover .card-v3-frame {
+  box-shadow: 0 12px 48px rgba(196,153,59,0.2);
+}
+/* Sheen sweep on hover */
+.card-v3-frame::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(232,198,106,0.25) 45%,
+    rgba(255,255,255,0.15) 50%,
+    rgba(232,198,106,0.25) 55%,
+    transparent 70%
+  );
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-30%) translateY(-30%);
+  pointer-events: none;
+  z-index: 2;
+}
+.card-v3:hover .card-v3-frame::after {
+  transform: translateX(10%) translateY(10%);
+}
+.card-v3-body {
+  background: #151210;
+  border-radius: 11px;
+  overflow: hidden;
+}
+.card-v3-image {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.card-v3-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-v3:hover .card-v3-image img { transform: scale(1.03); }
+.card-v3-info {
+  padding: 20px 16px 24px;
+  text-align: center;
+}
+.card-v3-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.card-v3-plant {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+.card-v3-price {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+
+/* ================================================
+   OPTION 4 — THE FLOATING ALTAR
+   Concept: The card levitates above the dark surface with a
+   dramatic shadow. Subtle 3D perspective tilt on hover — you're
+   picking the card up off the table. Rounded corners. Info panel
+   is a translucent warm overlay at the bottom of the card.
+   ================================================ */
+.card-v4 {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #1a1612;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  perspective: 800px;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.3),
+    0 1px 3px rgba(0,0,0,0.2);
+}
+.card-v4:hover {
+  transform: translateY(-12px) rotateX(3deg) rotateY(-2deg);
+  box-shadow:
+    0 30px 60px rgba(0,0,0,0.5),
+    0 15px 30px rgba(0,0,0,0.3),
+    0 0 80px rgba(196,153,59,0.06);
+}
+.card-v4-image-wrap {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  position: relative;
+}
+.card-v4-image-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-v4:hover .card-v4-image-wrap img { transform: scale(1.04); }
+/* Gradient overlay at bottom of image */
+.card-v4-image-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(26,22,18,0.95) 0%, rgba(26,22,18,0.6) 40%, transparent 100%);
+  pointer-events: none;
+}
+.card-v4-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 24px 24px;
+  z-index: 2;
+  text-align: center;
+}
+.card-v4-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.card-v4-plant {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.7);
+  margin-bottom: 8px;
+}
+.card-v4-price {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+
+/* ================================================
+   OPTION 5 — THE BOTANICAL SPECIMEN
+   Concept: Inspired by Sarah's actual paintings on birch wood.
+   A warm, slightly lighter card background (#2A2118) like stained
+   wood. Subtle inner shadow creates depth. Ornamental top/bottom
+   rules (thin gold lines) frame the image like a specimen plate.
+   Rounded corners. On hover, a soft prismatic light plays across
+   the surface — the "sheen" of protective varnish catching light.
+   ================================================ */
+.card-v5 {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #241e17;
+  border: 1px solid rgba(196,153,59,0.1);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s, border-color 0.4s;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+}
+.card-v5:hover {
+  transform: translateY(-6px);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3), 0 16px 48px rgba(0,0,0,0.4);
+  border-color: rgba(196,153,59,0.25);
+}
+/* Prismatic sheen */
+.card-v5::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    130deg,
+    transparent 20%,
+    rgba(196,153,59,0.06) 35%,
+    rgba(74,103,65,0.06) 42%,
+    rgba(199,91,58,0.04) 48%,
+    rgba(196,153,59,0.06) 55%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 3;
+}
+.card-v5:hover::after { opacity: 1; }
+
+.card-v5-ornament-top {
+  height: 1px;
+  margin: 16px 20px 0;
+  background: linear-gradient(90deg, transparent, rgba(196,153,59,0.35), transparent);
+}
+.card-v5-image {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  margin: 12px 16px 0;
+  border-radius: 6px;
+  position: relative;
+}
+.card-v5-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-v5:hover .card-v5-image img { transform: scale(1.02); }
+.card-v5-ornament-bottom {
+  height: 1px;
+  margin: 12px 20px 0;
+  background: linear-gradient(90deg, transparent, rgba(196,153,59,0.35), transparent);
+}
+.card-v5-info {
+  padding: 16px 20px 22px;
+  text-align: center;
+}
+.card-v5-numeral {
+  font-family: var(--font-ui);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(196,153,59,0.5);
+  margin-bottom: 6px;
+}
+.card-v5-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.card-v5-plant {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+.card-v5-price {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 900px) {
+  .card-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .option-header { grid-template-columns: 1fr; gap: 24px; }
+  .option-inner { padding: 0 24px; }
+  .nav a { padding: 22px 12px; font-size: 9px; letter-spacing: 0.12em; }
+}
+@media (max-width: 580px) {
+  .card-grid-3 { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#intro" class="active">Overview</a>
+  <span class="sep"></span>
+  <a href="#opt1">1 Sacred Frame</a>
+  <span class="sep"></span>
+  <a href="#opt2">2 Tarot Card</a>
+  <span class="sep"></span>
+  <a href="#opt3">3 Gilded Edge</a>
+  <span class="sep"></span>
+  <a href="#opt4">4 Floating Altar</a>
+  <span class="sep"></span>
+  <a href="#opt5">5 Specimen</a>
+</nav>
+
+<!-- INTRO -->
+<section id="intro" class="intro">
+  <p style="font-family:var(--font-ui); font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--color-accent); margin-bottom:32px;">Dark Temple: Card Display Exploration</p>
+  <h1>How Should the <em>Cards</em> Feel?</h1>
+  <p>Same Dark Temple palette. Same paintings. Five different ways to present the product cards, each exploring how to make a digital card feel like a <em>physical tarot card</em> you want to pick up.</p>
+  <p>Hover over each card to see the interaction. The one that feels right becomes the product card for the entire shop.</p>
+  <div class="note">All variations use real art from Sarah's site &middot; Dark Temple colors &middot; Cormorant Garamond + Lora + Raleway</div>
+</section>
+
+
+<!-- ============================================
+     OPTION 1 — THE SACRED FRAME
+     ============================================ -->
+<section id="opt1" class="option-section">
+  <div class="option-inner">
+    <div class="option-header">
+      <div>
+        <div class="option-label">Option 1</div>
+        <h2>The Sacred Frame</h2>
+        <p class="desc">A gold inset border frames the painting like a gilded picture frame in a dark gallery. The warm info panel below grounds it. Rounded corners soften the edges. On hover, the whole frame lifts and a warm gold glow appears.</p>
+      </div>
+      <ul class="traits">
+        <li>Rounded corners (12px outer, 6px image)</li>
+        <li>Thin gold border around painting</li>
+        <li>Warm panel below for name + info</li>
+        <li>Hover: lift + gold glow shadow</li>
+        <li>Inspired by Concept B's padded image area</li>
+      </ul>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-v1">
+        <div class="card-v1-image-wrap">
+          <div class="card-v1-image"><img src="assets/images/cards/death-card.jpg" alt="The Death Card"></div>
+        </div>
+        <div class="card-v1-info">
+          <div class="card-v1-name">The Death Card</div>
+          <div class="card-v1-plant">Angels Trumpet, Black Cohosh &amp; Rose</div>
+          <div class="card-v1-price">from $34.00</div>
+        </div>
+      </div>
+      <div class="card-v1">
+        <div class="card-v1-image-wrap">
+          <div class="card-v1-image"><img src="assets/images/cards/hierophant.jpg" alt="The Hierophant"></div>
+        </div>
+        <div class="card-v1-info">
+          <div class="card-v1-name">The Hierophant</div>
+          <div class="card-v1-plant">Sage &amp; Frankincense</div>
+          <div class="card-v1-price">from $34.00</div>
+        </div>
+      </div>
+      <div class="card-v1">
+        <div class="card-v1-image-wrap">
+          <div class="card-v1-image"><img src="assets/images/cards/fool.jpg" alt="The Fool"></div>
+        </div>
+        <div class="card-v1-info">
+          <div class="card-v1-name">The Fool</div>
+          <div class="card-v1-plant">Clematis</div>
+          <div class="card-v1-price">from $34.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 2 — THE TAROT CARD
+     ============================================ -->
+<section id="opt2" class="option-section">
+  <div class="option-inner">
+    <div class="option-header">
+      <div>
+        <div class="option-label">Option 2</div>
+        <h2>The Tarot Card</h2>
+        <p class="desc">The entire component is shaped like a real tarot card. Generous rounded corners. A thin border like the edge of a card. The image sits inside with dark mat spacing. Below, a warm label area centered like the text printed on an actual card. This IS the card.</p>
+      </div>
+      <ul class="traits">
+        <li>Generous rounded corners (16px) like a real card</li>
+        <li>Thin cream border — the card's edge</li>
+        <li>Dark mat padding around painting</li>
+        <li>Centered label area (warm panel, rounded bottom)</li>
+        <li>Hover: lifts, gold border appears, subtle scale</li>
+      </ul>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-v2">
+        <div class="card-v2-inner">
+          <div class="card-v2-image"><img src="assets/images/cards/death-card.jpg" alt="The Death Card"></div>
+          <div class="card-v2-info">
+            <div class="card-v2-name">The Death Card</div>
+            <div class="card-v2-plant">Angels Trumpet, Black Cohosh &amp; Rose</div>
+            <div class="card-v2-price">from $34.00</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-v2">
+        <div class="card-v2-inner">
+          <div class="card-v2-image"><img src="assets/images/cards/hierophant.jpg" alt="The Hierophant"></div>
+          <div class="card-v2-info">
+            <div class="card-v2-name">The Hierophant</div>
+            <div class="card-v2-plant">Sage &amp; Frankincense</div>
+            <div class="card-v2-price">from $34.00</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-v2">
+        <div class="card-v2-inner">
+          <div class="card-v2-image"><img src="assets/images/cards/fool.jpg" alt="The Fool"></div>
+          <div class="card-v2-info">
+            <div class="card-v2-name">The Fool</div>
+            <div class="card-v2-plant">Clematis</div>
+            <div class="card-v2-price">from $34.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 3 — THE GILDED EDGE
+     ============================================ -->
+<section id="opt3" class="option-section">
+  <div class="option-inner">
+    <div class="option-header">
+      <div>
+        <div class="option-label">Option 3</div>
+        <h2>The Gilded Edge</h2>
+        <p class="desc">The card is dipped in gold leaf. A gradient gold border wraps the entire component: the sheen of real gold leaf on a tarot deck's edges. On hover, a diagonal light sweep catches the gold, like turning a card in your hand and seeing the metallic edge catch light.</p>
+      </div>
+      <ul class="traits">
+        <li>Gold gradient border (3px) — the gold leaf edge</li>
+        <li>Rounded corners (14px)</li>
+        <li>Diagonal sheen sweep on hover</li>
+        <li>Centered info below image</li>
+        <li>Hover: intensified gold glow + light sweep</li>
+      </ul>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-v3">
+        <div class="card-v3-frame">
+          <div class="card-v3-body">
+            <div class="card-v3-image"><img src="assets/images/cards/death-card.jpg" alt="The Death Card"></div>
+            <div class="card-v3-info">
+              <div class="card-v3-name">The Death Card</div>
+              <div class="card-v3-plant">Angels Trumpet, Black Cohosh &amp; Rose</div>
+              <div class="card-v3-price">from $34.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-v3">
+        <div class="card-v3-frame">
+          <div class="card-v3-body">
+            <div class="card-v3-image"><img src="assets/images/cards/hierophant.jpg" alt="The Hierophant"></div>
+            <div class="card-v3-info">
+              <div class="card-v3-name">The Hierophant</div>
+              <div class="card-v3-plant">Sage &amp; Frankincense</div>
+              <div class="card-v3-price">from $34.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-v3">
+        <div class="card-v3-frame">
+          <div class="card-v3-body">
+            <div class="card-v3-image"><img src="assets/images/cards/fool.jpg" alt="The Fool"></div>
+            <div class="card-v3-info">
+              <div class="card-v3-name">The Fool</div>
+              <div class="card-v3-plant">Clematis</div>
+              <div class="card-v3-price">from $34.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 4 — THE FLOATING ALTAR
+     ============================================ -->
+<section id="opt4" class="option-section">
+  <div class="option-inner">
+    <div class="option-header">
+      <div>
+        <div class="option-label">Option 4</div>
+        <h2>The Floating Altar</h2>
+        <p class="desc">The card levitates above the dark surface. A dramatic drop shadow creates the illusion of floating. On hover, it tilts in 3D, like picking a card up off the table. The info overlays the bottom of the image through a gradient fade, so the card itself is one continuous object.</p>
+      </div>
+      <ul class="traits">
+        <li>Rounded corners (14px)</li>
+        <li>Deep, layered shadow — the card floats</li>
+        <li>3D tilt on hover (perspective transform)</li>
+        <li>Gradient overlay — info fades in over painting</li>
+        <li>Full-bleed image — no separate info panel</li>
+      </ul>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-v4">
+        <div class="card-v4-image-wrap">
+          <img src="assets/images/cards/death-card.jpg" alt="The Death Card">
+        </div>
+        <div class="card-v4-info">
+          <div class="card-v4-name">The Death Card</div>
+          <div class="card-v4-plant">Angels Trumpet, Black Cohosh &amp; Rose</div>
+          <div class="card-v4-price">from $34.00</div>
+        </div>
+      </div>
+      <div class="card-v4">
+        <div class="card-v4-image-wrap">
+          <img src="assets/images/cards/hierophant.jpg" alt="The Hierophant">
+        </div>
+        <div class="card-v4-info">
+          <div class="card-v4-name">The Hierophant</div>
+          <div class="card-v4-plant">Sage &amp; Frankincense</div>
+          <div class="card-v4-price">from $34.00</div>
+        </div>
+      </div>
+      <div class="card-v4">
+        <div class="card-v4-image-wrap">
+          <img src="assets/images/cards/fool.jpg" alt="The Fool">
+        </div>
+        <div class="card-v4-info">
+          <div class="card-v4-name">The Fool</div>
+          <div class="card-v4-plant">Clematis</div>
+          <div class="card-v4-price">from $34.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================
+     OPTION 5 — THE BOTANICAL SPECIMEN
+     ============================================ -->
+<section id="opt5" class="option-section">
+  <div class="option-inner">
+    <div class="option-header">
+      <div>
+        <div class="option-label">Option 5</div>
+        <h2>The Botanical Specimen</h2>
+        <p class="desc">Inspired by Sarah's paintings on birch wood. A warm, slightly lighter background like stained wood. Ornamental gold rules above and below the image, like a specimen plate in a botanical archive. On hover, a subtle prismatic sheen plays across the surface, like protective varnish catching light. Includes a card numeral for that tarot-deck feel.</p>
+      </div>
+      <ul class="traits">
+        <li>Warm wood-tone background (#241e17)</li>
+        <li>Rounded corners (14px)</li>
+        <li>Gold ornamental rules above and below image</li>
+        <li>Card numeral (XIII, 0, V) in muted gold</li>
+        <li>Hover: prismatic varnish sheen + lift</li>
+      </ul>
+    </div>
+    <div class="card-grid-3">
+      <div class="card-v5">
+        <div class="card-v5-ornament-top"></div>
+        <div class="card-v5-image"><img src="assets/images/cards/death-card.jpg" alt="The Death Card"></div>
+        <div class="card-v5-ornament-bottom"></div>
+        <div class="card-v5-info">
+          <div class="card-v5-numeral">Card XIII &middot; Scorpio</div>
+          <div class="card-v5-name">The Death Card</div>
+          <div class="card-v5-plant">Angels Trumpet, Black Cohosh &amp; Rose</div>
+          <div class="card-v5-price">from $34.00</div>
+        </div>
+      </div>
+      <div class="card-v5">
+        <div class="card-v5-ornament-top"></div>
+        <div class="card-v5-image"><img src="assets/images/cards/hierophant.jpg" alt="The Hierophant"></div>
+        <div class="card-v5-ornament-bottom"></div>
+        <div class="card-v5-info">
+          <div class="card-v5-numeral">Card V &middot; Taurus</div>
+          <div class="card-v5-name">The Hierophant</div>
+          <div class="card-v5-plant">Sage &amp; Frankincense</div>
+          <div class="card-v5-price">from $34.00</div>
+        </div>
+      </div>
+      <div class="card-v5">
+        <div class="card-v5-ornament-top"></div>
+        <div class="card-v5-image"><img src="assets/images/cards/fool.jpg" alt="The Fool"></div>
+        <div class="card-v5-ornament-bottom"></div>
+        <div class="card-v5-info">
+          <div class="card-v5-numeral">Card 0 &middot; Uranus</div>
+          <div class="card-v5-name">The Fool</div>
+          <div class="card-v5-plant">Clematis</div>
+          <div class="card-v5-price">from $34.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer style="background:#0a0a0a; padding:80px 40px; text-align:center; border-top:1px solid rgba(196,153,59,0.06);">
+  <p style="font-family:var(--font-ui); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(245,240,232,0.2);">Dark Temple | Card Display Exploration | February 2026</p>
+  <p style="font-family:var(--font-body); font-size:0.85rem; color:rgba(245,240,232,0.25); margin-top:10px;">Pick the one that feels like picking up a real card.</p>
+</footer>
+
+
+<!-- SCROLL SPY -->
+<script>
+(function() {
+  const links = document.querySelectorAll('.nav a');
+  const sections = document.querySelectorAll('#intro, #opt1, #opt2, #opt3, #opt4, #opt5');
+  function update() {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    links.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>

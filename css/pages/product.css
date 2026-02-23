@@ -1,0 +1,279 @@
+/* ================================================================
+   PRODUCT / CARD DETAIL PAGE
+   Rattlesnakes & Rainbows — Dark Temple Design System
+   ================================================================ */
+
+/* --- Page wrapper --- */
+.product-page {
+  padding-top: var(--nav-height);
+}
+
+/* --- Detail container --- */
+.detail-page {
+  background: var(--color-bg-primary);
+}
+
+/* --- Two-column top section (image left, info right) --- */
+.detail-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Image column --- */
+.detail-image {
+  background: var(--color-bg-primary);
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-image img {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Info column --- */
+.detail-info {
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Back link --- */
+.detail-back {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s;
+}
+.detail-back:hover {
+  color: var(--color-accent);
+}
+
+/* --- Card name --- */
+.detail-card-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+/* --- Plants subtitle --- */
+.detail-plants {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+/* --- Meta line (edition, series) --- */
+.detail-meta {
+  font-family: var(--font-ui);
+  font-size: var(--size-caption);
+  color: rgba(168, 155, 140, 0.55);
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+}
+
+/* --- Affirmation quote --- */
+.detail-affirmation {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  line-height: 1.7;
+  padding: 24px 0;
+  border-top: 1px solid rgba(196, 153, 59, 0.15);
+  border-bottom: 1px solid rgba(196, 153, 59, 0.15);
+  margin-bottom: 28px;
+  position: relative;
+}
+.detail-affirmation::before {
+  content: '\201C';
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--color-accent);
+  position: absolute;
+  top: 10px;
+  left: -4px;
+  opacity: 0.4;
+  line-height: 1;
+}
+.detail-affirmation p {
+  padding-left: 24px;
+}
+
+/* --- Size selector (pill buttons) --- */
+.size-selector {
+  display: flex;
+  max-width: max-content;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.size-option {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 10px 22px;
+  border: 1px solid rgba(245, 240, 232, 0.15);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.3s;
+  background: transparent;
+}
+.size-option:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+.size-option.selected {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(196, 153, 59, 0.08);
+}
+
+/* --- Price --- */
+.detail-price {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* --- Button row alignment --- */
+.detail-info .btn-row {
+  justify-content: flex-start;
+}
+
+/* --- Content sections below the fold --- */
+.detail-content-section {
+  padding: var(--space-xl) var(--space-lg);
+  border-top: 1px solid rgba(245, 240, 232, 0.06);
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+.detail-content-section.warm-bg {
+  /* Full-bleed background with constrained content */
+  background: var(--color-bg-warm);
+  max-width: none;
+  padding-left: max(var(--space-lg), calc((100% - var(--max-width)) / 2 + var(--space-lg)));
+  padding-right: max(var(--space-lg), calc((100% - var(--max-width)) / 2 + var(--space-lg)));
+}
+.detail-content-section h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin-bottom: 24px;
+}
+.detail-content-section p {
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  color: var(--color-text-muted);
+  line-height: var(--leading-body);
+  margin-bottom: 16px;
+  max-width: 720px;
+}
+
+/* --- Plant list grid --- */
+.plant-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.plant-item {
+  padding: 20px;
+  background: rgba(15, 15, 15, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(245, 240, 232, 0.04);
+}
+.plant-item-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+.plant-item-latin {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+.plant-item-desc {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* --- Related cards row --- */
+.related-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 1024px) {
+  .detail-top {
+    grid-template-columns: 1fr;
+  }
+  .plant-list {
+    grid-template-columns: 1fr;
+  }
+  .related-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .detail-image {
+    padding: 24px;
+  }
+  .detail-info {
+    padding: 32px 24px;
+  }
+  .detail-content-section {
+    padding: 32px 24px;
+  }
+  .related-cards {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .plant-list {
+    grid-template-columns: 1fr;
+  }
+  .size-option {
+    padding: 12px 24px;
+    min-height: 44px;
+  }
+}
