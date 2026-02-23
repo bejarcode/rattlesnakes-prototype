@@ -516,10 +516,22 @@
     margin: 0 auto;
   }
 
-  /* Murals images — 2 columns instead of 3, bigger images */
+  /* Murals — center text on mobile */
   .murals-preview {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .murals-preview-text {
+    text-align: center;
+  }
+
+  .murals-preview-text h2 {
+    letter-spacing: 0.08em;
+  }
+
+  .murals-preview-ctas {
+    justify-content: center;
   }
 
   .murals-preview-images {
